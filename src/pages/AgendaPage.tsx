@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { MusicNote, CalendarBlank, FacebookLogo, ArrowSquareOut } from '@phosphor-icons/react'
+import { MusicNote, CalendarBlank, FacebookLogo, ArrowSquareOut, InstagramLogoIcon, ArrowRightIcon } from '@phosphor-icons/react'
 import SectionLabel from '../components/ui/SectionLabel'
 import { CAFE_NAME, social, images } from '../data/siteData'
 
@@ -183,12 +183,200 @@ function SpecialeEvents() {
   )
 }
 
+// ─── Facebook Page embed — consent gate (GDPR) ──────────────────────
+function FacebookPageEmbed() {
+  const [accepted, setAccepted] = useState(false)
+  const iframeRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!accepted) return
+    // Laad de Facebook SDK éénmalig na toestemming
+    if (document.getElementById('fb-sdk')) return
+    const script = document.createElement('script')
+    script.id = 'fb-sdk'
+    script.src = 'https://connect.facebook.net/nl_NL/sdk.js#xfbml=1&version=v20.0'
+    script.async = true
+    script.defer = true
+    document.body.appendChild(script)
+  }, [accepted])
+
+  if (!accepted) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full min-h-[340px] text-center px-6 py-10 gap-5">
+        <div className="w-12 h-12 rounded-full bg-amber-cafe/15 flex items-center justify-center">
+          <FacebookLogo size={24} weight="fill" className="text-amber-cafe" />
+        </div>
+        <div>
+          <p className="font-display text-cream-50 text-base font-semibold mb-2">
+            Facebook-posts laden
+          </p>
+          <p className="text-cream-200/55 text-sm leading-relaxed max-w-[30ch]">
+            Hiervoor worden cookies van Facebook geplaatst.
+          </p>
+        </div>
+        <button
+          onClick={() => setAccepted(true)}
+          className="btn btn-ghost-fill text-sm px-5 py-2.5"
+        >
+          Akkoord & laden
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div ref={iframeRef} className="overflow-hidden rounded-card-inner">
+      <div id="fb-root" />
+      <div
+        className="fb-page"
+        data-href="https://www.facebook.com/Veerhuysphoek"
+        data-tabs="timeline"
+        data-width="400"
+        data-height="400"
+        data-small-header="true"
+        data-adapt-container-width="true"
+        data-hide-cover="false"
+        data-show-facepile="false"
+      />
+    </div>
+  )
+}
+
+// ─── Sociaal sfeerblok ───────────────────────────────────────────────
+function SociaalSfeerblok() {
+  return (
+    <section
+      className="py-section bg-espresso-800 overflow-hidden"
+      aria-label="Volg ons op social media"
+    >
+      <div className="max-w-7xl mx-auto px-4">
+
+        {/* Header */}
+        <FadeUp>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+            <div>
+              <SectionLabel className="mb-5 bg-cream-50/8 border-cream-200/15 text-cream-200/60">
+                Social media
+              </SectionLabel>
+              <h2 className="font-display text-display-md text-cream-50 text-balance">
+                Volg ons voor de sfeer
+              </h2>
+            </div>
+            <p className="text-cream-200/50 text-sm max-w-[36ch] sm:text-right leading-relaxed">
+              De nieuwste party-aankondigingen, sfeerbeelden en updates vind je het eerst op onze socials.
+            </p>
+          </div>
+        </FadeUp>
+
+        {/* Twee-koloms grid — foto-raster + Facebook embed */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+
+          {/* Linker kolom — Instagram CTA */}
+          <FadeUp delay={0.05}>
+            <div className="card-shell h-full">
+              <div className="card-core bg-espresso-700 p-8 h-full flex flex-col justify-between gap-8">
+
+                {/* Logo + handle */}
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center flex-shrink-0 shadow-warm-sm">
+                    <InstagramLogoIcon size={22} weight="fill" className="text-white" />
+                  </div>
+                  <div>
+                    <p className="font-body font-semibold text-cream-50 text-sm leading-tight">@veerhuysphoek</p>
+                    <p className="text-cream-200/45 text-xs">Instagram</p>
+                  </div>
+                </div>
+
+                {/* Decoratief vlak */}
+                <div className="flex-1 flex items-center justify-center py-4">
+                  <div className="w-full max-w-[220px] aspect-square rounded-2xl border border-cream-200/10 bg-cream-50/4 flex items-center justify-center">
+                    <InstagramLogoIcon size={56} weight="thin" className="text-cream-200/20" />
+                  </div>
+                </div>
+
+                {/* Tekst + knop */}
+                <div className="flex flex-col gap-5">
+                  <p className="text-cream-200/65 text-sm leading-relaxed">
+                    De nieuwste sfeerfoto's en aankondigingen vind je op onze Instagram.
+                  </p>
+                  <a
+                    href={social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-ghost-fill w-full justify-center group text-sm"
+                  >
+                    <InstagramLogoIcon size={16} weight="fill" />
+                    Volg ons op Instagram
+                    <span className="btn-arrow ml-auto">
+                      <ArrowRightIcon size={13} weight="bold" />
+                    </span>
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* Rechter kolom — Facebook Page embed */}
+          <FadeUp delay={0.12}>
+            <div className="card-shell h-full">
+              <div className="card-core bg-espresso-700 h-full flex flex-col overflow-hidden">
+
+                {/* Kaart-header */}
+                <div className="flex items-center gap-3 px-5 pt-5 pb-4 border-b border-cream-200/8">
+                  <div className="w-9 h-9 rounded-full bg-[#1877F2] flex items-center justify-center flex-shrink-0">
+                    <FacebookLogo size={18} weight="fill" className="text-white" />
+                  </div>
+                  <div>
+                    <p className="font-body font-semibold text-cream-50 text-sm leading-tight">Café 't Veerhuys</p>
+                    <p className="text-cream-200/45 text-xs">Facebook-pagina</p>
+                  </div>
+                </div>
+
+                {/* Embed of consent gate */}
+                <div className="flex-1">
+                  <FacebookPageEmbed />
+                </div>
+
+                {/* Footer-link */}
+                <div className="px-5 pb-5 pt-3 border-t border-cream-200/8">
+                  <a
+                    href={social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-ghost-fill w-full justify-center group text-sm"
+                  >
+                    <FacebookLogo size={16} weight="fill" />
+                    Bekijk Facebook-pagina
+                    <span className="btn-arrow ml-auto">
+                      <ArrowRightIcon size={13} weight="bold" />
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </FadeUp>
+        </div>
+
+        {/* Sub-tekst */}
+        <FadeUp delay={0.18}>
+          <p className="text-center text-cream-200/30 text-xs">
+            Speciale avonden worden als eerste aangekondigd op Facebook en Instagram.
+          </p>
+        </FadeUp>
+
+      </div>
+    </section>
+  )
+}
+
 export default function AgendaPage() {
   return (
     <>
       <PageHero />
       <VastAgenda />
       <SpecialeEvents />
+      <SociaalSfeerblok />
     </>
   )
 }

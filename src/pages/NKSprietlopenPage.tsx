@@ -41,7 +41,7 @@ function PageHero() {
           transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
           className="max-w-2xl pt-32"
         >
-          <span className="eyebrow mb-5 inline-flex">Jaarlijks evenement &bull; Puttershoek</span>
+          <span className="eyebrow mb-5 inline-flex !bg-espresso-800/65 !border-cream-200/35 !text-cream-100 !font-bold backdrop-blur-sm shadow-sm">Jaarlijks evenement &bull; Puttershoek</span>
           <h1 className="font-display text-display-lg text-cream-50 mb-4 text-balance">
             NK Sprietlopen
           </h1>
