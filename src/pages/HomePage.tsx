@@ -73,7 +73,7 @@ function HeroSection() {
           </h1>
           <p className="text-cream-200/80 text-lg leading-relaxed mb-10 max-w-[48ch] text-shadow-hero-sm">
             Of je na het werk binnenstapt voor een biertje, buiten wil zitten
-            met uitzicht op de Maas, of later op de avond aanschuift — je bent welkom.
+            met uitzicht op de Maas, of later op de avond aanschuift, je bent welkom.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link to="/agenda" className="btn btn-primary">
