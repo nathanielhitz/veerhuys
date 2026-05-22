@@ -64,10 +64,10 @@ export const nkSprietlopen = {
 
 // TODO: vervang placeholder-URLs door echte foto's zodra aangeleverd
 export const images = {
-  heroPlaceholder: "/public/images/achtergrond-homepagina.png",
+  heroPlaceholder: "/images/achtergrond-homepagina.png",
   terrasSfeer: "https://picsum.photos/seed/veerhuys-terras/900/600",
   avondSfeer: "https://picsum.photos/seed/veerhuys-nacht/900/600",
-  nkSpriet: "/public/images/DSC_3281.jpeg",
+  nkSpriet: "/images/DSC_3281.jpeg",
   gallerijA: "https://picsum.photos/seed/veerhuys-g1/800/600",
   gallerijB: "https://picsum.photos/seed/veerhuys-g2/800/600",
   gallerijC: "https://picsum.photos/seed/veerhuys-g3/800/600",
